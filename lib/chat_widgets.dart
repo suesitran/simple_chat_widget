@@ -17,8 +17,11 @@ class Message {
         senderUid = map['from'],
         message = map['message'];
 
-  Map<String, dynamic> toMap() =>
-      {'time': time.millisecondsSinceEpoch, 'from': senderUid, 'message': message};
+  Map<String, dynamic> toMap() => {
+        'time': time.millisecondsSinceEpoch,
+        'from': senderUid,
+        'message': message
+      };
 }
 
 class UserDetail {
@@ -45,9 +48,9 @@ class ChatBubble extends StatelessWidget {
 
   const ChatBubble(
       {required this.text,
-        required this.senderUid,
-        required this.isMine,
-        super.key});
+      required this.senderUid,
+      required this.isMine,
+      super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -61,7 +64,7 @@ class ChatBubble extends StatelessWidget {
           decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(20.0),
               color:
-              isMine ? const Color(0xFF7A8194) : const Color(0xFF373E4E)),
+                  isMine ? const Color(0xFF7A8194) : const Color(0xFF373E4E)),
           padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
           child: Text(
             text,
@@ -83,7 +86,7 @@ class ChatBubble extends StatelessWidget {
       alignment: isMine ? Alignment.centerRight : Alignment.centerLeft,
       child: Row(
         mainAxisAlignment:
-        isMine ? MainAxisAlignment.end : MainAxisAlignment.start,
+            isMine ? MainAxisAlignment.end : MainAxisAlignment.start,
         children: children,
       ),
     );
@@ -105,42 +108,42 @@ class _MessageBoxViewState extends State<MessageBoxView> {
 
   @override
   Widget build(BuildContext context) => TextField(
-    controller: _editingController,
-    style: const TextStyle(color: Colors.white),
-    decoration: InputDecoration(
-        hintText: 'Message',
-        hintStyle: TextStyle(color: Colors.white.withValues(alpha: 0.45)),
-        border: inputBorder,
-        focusedBorder: inputBorder,
-        enabledBorder: inputBorder,
-        fillColor: const Color(0xFF3D4354),
-        prefixIcon: const CircleAvatar(
-          radius: 15,
-          backgroundColor: Color(0xFF9398A7),
-          child: Icon(
-            Icons.camera_alt,
-            color: Colors.white,
-            size: 15,
-          ),
-        ),
-        prefixIconConstraints: const BoxConstraints(
-          minWidth: 50,
-        ),
-        suffixIcon: InkWell(
-          child: const CircleAvatar(
-            radius: 15,
-            backgroundColor: Color(0xFF9398A7),
-            child: Icon(
-              Icons.send,
-              color: Colors.white,
-              size: 15,
+        controller: _editingController,
+        style: const TextStyle(color: Colors.white),
+        decoration: InputDecoration(
+            hintText: 'Message',
+            hintStyle: TextStyle(color: Colors.white.withValues(alpha: 0.45)),
+            border: inputBorder,
+            focusedBorder: inputBorder,
+            enabledBorder: inputBorder,
+            fillColor: const Color(0xFF3D4354),
+            prefixIcon: const CircleAvatar(
+              radius: 15,
+              backgroundColor: Color(0xFF9398A7),
+              child: Icon(
+                Icons.camera_alt,
+                color: Colors.white,
+                size: 15,
+              ),
             ),
-          ),
-          onTap: () => _sendMessage(_editingController.text),
-        ),
-        suffixIconConstraints: const BoxConstraints(minWidth: 50)),
-    onSubmitted: _sendMessage,
-  );
+            prefixIconConstraints: const BoxConstraints(
+              minWidth: 50,
+            ),
+            suffixIcon: InkWell(
+              child: const CircleAvatar(
+                radius: 15,
+                backgroundColor: Color(0xFF9398A7),
+                child: Icon(
+                  Icons.send,
+                  color: Colors.white,
+                  size: 15,
+                ),
+              ),
+              onTap: () => _sendMessage(_editingController.text),
+            ),
+            suffixIconConstraints: const BoxConstraints(minWidth: 50)),
+        onSubmitted: _sendMessage,
+      );
 
   InputBorder get inputBorder =>
       FilledInputBorder(borderRadius: BorderRadius.circular(25.0));
@@ -163,12 +166,12 @@ class FilledInputBorder extends InputBorder {
 
   FilledInputBorder(
       {this.side = BorderSide.none,
-        this.textDirection,
-        this.borderRadius = BorderRadius.zero});
+      this.textDirection,
+      this.borderRadius = BorderRadius.zero});
 
   @override
   InputBorder copyWith(
-      {BorderSide? borderSide, TextDirection? textDirection}) =>
+          {BorderSide? borderSide, TextDirection? textDirection}) =>
       FilledInputBorder(
           side: borderSide ?? side,
           textDirection: textDirection ?? this.textDirection);
@@ -196,9 +199,9 @@ class FilledInputBorder extends InputBorder {
   @override
   void paint(Canvas canvas, Rect rect,
       {double? gapStart,
-        double gapExtent = 0.0,
-        double gapPercentage = 0.0,
-        TextDirection? textDirection}) {
+      double gapExtent = 0.0,
+      double gapPercentage = 0.0,
+      TextDirection? textDirection}) {
     canvas.drawRRect(borderRadius.resolve(textDirection).toRRect(rect), _paint);
   }
 
@@ -229,12 +232,24 @@ class UserAvatarView extends StatelessWidget {
       child: avatar == 'model'
           ? Icon(Icons.manage_accounts_outlined)
           : Image.network(
-        avatar!,
-        width: size,
-        height: size,
-        errorBuilder: (context, error, stackTrace) =>
-            Icon(Icons.person, size: size),
-      ),
+              avatar!,
+              width: size,
+              height: size,
+              errorBuilder: (context, error, stackTrace) =>
+                  Icon(Icons.person, size: size),
+            ),
     );
   }
+}
+
+class LoginView extends StatelessWidget {
+  final VoidCallback onPressed;
+
+  const LoginView({super.key, required this.onPressed});
+
+  @override
+  Widget build(BuildContext context) => Center(
+        child:
+            ElevatedButton(onPressed: onPressed, child: Text('Please login')),
+      );
 }
